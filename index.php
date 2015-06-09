@@ -50,20 +50,6 @@ if ( isset( $_GET['action'] ) ) {
 
 		case "check_before_upload" :
 			
-			$link = mysql_connect('localhost', 'root', '');
-			if (!$link) {
-			    die('Could not connect: ' . mysql_error());
-			}
-			
-			$client_url_clean = str_replace('.', '_', $client_url);
-			
-			$sql = 'CREATE DATABASE ' . $client_url_clean;
-			if (mysql_query($sql, $link)) {
-			    echo "Database " . $client_url_clean . " created successfully !!!\n";
-			} else {
-			    echo 'Error creating database: ' . mysql_error() . "\n";
-			}
-			
 			$data = array();
 
 			/*--------------------------*/
@@ -632,17 +618,14 @@ else { ?>
 				<p><?php echo _( "Below you should enter your database connection details. If you&#8217;re not sure about these, contact your host." ); ?></p>
 
 				<table class="form-table">
-					<!--
-<tr>
+					<tr>
 						<th scope="row"><label for="domain"><?php echo _('Domain name');?></label></th>
-						<td><input name="domain" id="domain" type="text" size="25" value="<?php // echo $client_url; ?>" class="required" /></td>
-						<td><?php echo _( 'The client\' domain name.' ); ?></td>
+						<td><input name="domain" id="domain" type="text" size="25" value="<?php echo $client_domain; ?>" class="required" /></td>
+						<td><?php echo _( 'The name of the database you want to run WP in.' ); ?></td>
 					</tr>
--->
-					
 					<tr>
 						<th scope="row"><label for="dbname"><?php echo _('Database name');?></label></th>
-						<td><input name="dbname" id="dbname" type="text" size="25" value="<?php // echo $client_url_clean; ?>" class="required" /></td>
+						<td><input name="dbname" id="dbname" type="text" size="25" value="" class="required" /></td>
 						<td><?php echo _( 'The name of the database you want to run WP in.' ); ?></td>
 					</tr>
 					<tr>
@@ -795,7 +778,7 @@ else { ?>
 							<label for="permalink_structure"><?php echo _('Custom Structure');?></label>
 						</th>
 						<td>
-							<code>http://<?php echo $_SERVER['SERVER_NAME']; ?></code>
+							<code>http://domain.artezacreative.com</code>
 							<input name="permalink_structure" type="text" id="permalink_structure" size="50" value="/%postname%/" />
 						</td>
 					</tr>
@@ -901,7 +884,7 @@ else { ?>
 
 			<div class="alert alert-error" style="margin-bottom: 0px;">
 				<strong><?php echo _('Warning !');?></strong>
-				<p style="margin-bottom:0px;"><?php echo _('You don\'t have permission for this operation ') . basename( $parent_dir ) . _('. Thank you for setting the proper file permissions.') ;?></p>
+				<p style="margin-bottom:0px;"><?php echo _('You don\'t have permission for the requested operation on ') . basename( $parent_dir ) . _('. Thank you for setting the proper file permissions.') ;?></p>
 			</div>
 
 		<?php
